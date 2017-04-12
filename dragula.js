@@ -364,7 +364,7 @@ function dragula (initialContainers, options) {
     var clientX = getCoord('clientX', e);
     var clientY = getCoord('clientY', e);
     var x = clientX - _offsetX;
-    var y = clientY - _offsetY;
+    var y = clientY - _offsetY + window.scrollY;
 
     _mirror.style.left = x + 'px';
     _mirror.style.top = y + 'px';
