@@ -1,4 +1,4 @@
-'use strict';
+use strict';
 
 var emitter = require('contra/emitter');
 var crossvent = require('crossvent');
@@ -124,6 +124,7 @@ function dragula (initialContainers, options) {
       release({});
       return; // when text is selected on an input and then dragged, mouseup doesn't fire. this is our only hope
     }
+    e.preventDefault();
     // truthy check fixes #239, equality fixes #207
     if (e.clientX !== void 0 && e.clientX === _moveX && e.clientY !== void 0 && e.clientY === _moveY) {
       return;
@@ -253,7 +254,7 @@ function dragula (initialContainers, options) {
 
   function drop (item, target) {
     var parent = getParent(item);
-    if (_copy && o.copySortSource && target === _source) {
+    if (_copy && o.copySortSource && target === _source && parent) {
       parent.removeChild(_item);
     }
     if (isInitialPlacement(target)) {
@@ -516,7 +517,7 @@ function touchy (el, op, type, fn) {
   } else if (global.navigator.msPointerEnabled) {
     crossvent[op](el, microsoft[type], fn);
   } else {
-    crossvent[op](el, touch[type], fn);
+    crossvent[op](el, touch[type], fn, {passive: false});
     crossvent[op](el, type, fn);
   }
 }
