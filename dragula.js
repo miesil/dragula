@@ -1,4 +1,4 @@
-use strict';
+use 'strict';
 
 var emitter = require('contra/emitter');
 var crossvent = require('crossvent');
