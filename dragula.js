@@ -37,6 +37,7 @@ function dragula (initialContainers, options) {
   if (o.copySortSource === void 0) { o.copySortSource = false; }
   if (o.revertOnSpill === void 0) { o.revertOnSpill = false; }
   if (o.removeOnSpill === void 0) { o.removeOnSpill = false; }
+  if (o.removeOnSpillFn === void 0) { o.removeOnSpillFn = never; }
   if (o.direction === void 0) { o.direction = 'vertical'; }
   if (o.ignoreInputTextSelection === void 0) { o.ignoreInputTextSelection = true; }
   if (o.mirrorContainer === void 0) { o.mirrorContainer = doc.body; }
@@ -245,7 +246,7 @@ function dragula (initialContainers, options) {
     var dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
     if (dropTarget && ((_copy && o.copySortSource) || (!_copy || dropTarget !== _source))) {
       drop(item, dropTarget);
-    } else if (o.removeOnSpill) {
+    } else if (o.removeOnSpill || o.removeOnSpillFn(item)) {
       remove();
     } else {
       cancel();
